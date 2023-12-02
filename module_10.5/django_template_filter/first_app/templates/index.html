@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello from App</h1>
+    <p>Author: {{name}}</p>
+    <p>Author: {{name}}</p>
+    <p>Author: {{name}}</p>
+    <p>Author: {{name}}</p>
+    <p>Age: {{age}}</p>
+
+    <p>addTemplate before: {{addTemplate}}</p>
+    <p><span style="font-weight: bold">add</span>Template after: {{addTemplate | add:"200"}}</p>
+    <p>addslashesTemplate before: {{addSlashTemplate}}</p>
+    <p><span style="font-weight: bold">addslashes</span>Template after: {{addSlashTemplate | addslashes}}</p>
+    <p>capfirstTemplate before: {{capFirstTemplate}}</p>
+    <p><span style="font-weight: bold">capfirst</span>Template after: {{capFirstTemplate | capfirst}}</p>
+    <p>centerTemplate before: {{centerTemplate}}</p>
+    <p><span style="font-weight: bold">center</span>Template after: {{centerTemplate | center:"20"}}</p>
+    <p>cutTemplate before: {{cutTemplate}}</p>
+    <p><span style="font-weight: bold">cut</span>Template after: {{cutTemplate | cut:" "}}</p>
+    <p>dateTemplate before: {{dateTemplate}}</p>
+    <p><span style="font-weight: bold">date</span>Template after: {{dateTemplate | date:"D d M Y"}}</p>
+    <p>defaultTemplate before: {{defaultTemplate}}</p>
+    <p><span style="font-weight: bold">default</span>Template after: {{defaultTemplate | default:"Nirob Barman"}}</p>
+    <p>dictsortTemplate before: {{dictsortTemplate}}</p>
+    <p><span style="font-weight: bold">dictsort</span>Template after: {{dictsortTemplate | dictsort:"name"}}</p>
+    <p>divisiblebyTemplate before: {{divisiblebyTemplate}}</p>
+    <p><span style="font-weight: bold">divisibleby</span>Template after: {{divisiblebyTemplate | divisibleby:"3"}}</p>
+    <p>escapeTemplate before: {{escapeTemplate}}</p>
+    <p><span style="font-weight: bold">escape</span>Template after: {{escapeTemplate | escape}}</p>
+    <p>filesizeformatTemplate before: {{filesizeformatTemplate}}</p>
+    <p><span style="font-weight: bold">filesizeformat</span>Template after: {{filesizeformatTemplate | filesizeformat}}</p>
+    <p>firstTemplate before: {{firstTemplate}}</p>
+    <p><span style="font-weight: bold">first</span>Template after: {{firstTemplate | first}}</p>
+    <p>joinTemplate before: {{joinTemplate}}</p>
+    <p><span style="font-weight: bold">join</span>Template after: {{joinTemplate | join:"-"}}</p>
+    <p>lastTemplate before: {{lastTemplate}}</p>
+    <p><span style="font-weight: bold">last</span>Template after: {{lastTemplate | last}}</p>
+    <p>lengthTemplate before: {{lengthTemplate}}</p>
+    <p><span style="font-weight: bold">length</span>Template after: {{lengthTemplate | length}}</p>
+    <p>Hello </p>
+    <p>linenumbersTemplate before: {{linenumbersTemplate}}</p>
+    <p><span style="font-weight: bold">linenumbers</span>Template after: {{linenumbersTemplate | linenumbers}}</p>
+    <p>lowerTemplate before: {{lowerTemplate}}</p>
+    <p><span style="font-weight: bold">lower</span>Template after: {{lowerTemplate | lower}}</p>
+    <p>make_listTemplate before: {{make_listTemplate}}</p>
+    <p><span style="font-weight: bold">make_list</span>Template after: {{make_listTemplate | make_list}}</p>
+    <p>make_listStringTemplate before: {{make_listStringTemplate}}</p>
+    <p><span style="font-weight: bold">make_list</span>StringTemplate after: {{make_listStringTemplate | make_list}}</p>
+    <p>randomTemplate before: {{randomTemplate}}</p>
+    <p><span style="font-weight: bold">random</span>Template after: {{randomTemplate | random}}</p>
+    <p>sliceTemplate before: {{sliceTemplate}}</p>
+    <p><span style="font-weight: bold">slice</span>Template after: {{sliceTemplate | slice:"2"}}</p>
+    <p><span style="font-weight: bold">slice</span>Template after: {{sliceTemplate | slice:":2"}}</p>
+    <p><span style="font-weight: bold">slice</span>Template after: {{sliceTemplate | slice:"2:4"}}</p>
+    <p><span style="font-weight: bold">slice</span>Template after: {{sliceTemplate | slice:"2:-2"}}</p>
+    <p>slugifyTemplate before: {{slugifyTemplate}}</p>
+    <p><span style="font-weight: bold">slugify</span>Template after: {{slugifyTemplate | slugify}}</p>
+    <p>timeTemplate before: {{timeTemplate}}</p></p>
+    <p><span style="font-weight: bold">time</span>Template after: {{timeTemplate | time}}</p>
+    <p><span style="font-weight: bold">time</span>Template after: {{timeTemplate | time:"H:i"}}</p>
+    <p><span style="font-weight: bold">time</span>Template after: {{timeTemplate | time:"H:i:s"}}</p>
+    <p><span style="font-weight: bold">time</span>Template after: {{timeTemplate | time:"H:i:s.u"}}</p>
+    
+    <p>timesinceTemplate before: {{timesinceTemplate}}</p>
+    <p><span style="font-weight: bold">timesince</span>Template after: {{timesinceTemplate | timesince}}</p>
+
+    <p>titleTemplate before: {{titleTemplate}}</p>
+    <p><span style="font-weight: bold">title</span>Template after: {{titleTemplate | title}}</p>
+    <p>unorder_listTemplate before: {{unorder_listTemplate}}</p>
+
+    <p>upperTemplate before: {{upperTemplate}}</p>
+    <p><span style="font-weight: bold">upper</span>Template after: {{upperTemplate | upper}}</p>
+    <p>wordcountTemplate before: {{wordcountTemplate}}</p>
+    <p><span style="font-weight: bold">wordcount</span>Template after: {{wordcountTemplate | wordcount}}</p>
+
+    <p>truncatecharsTemplate before: {{truncatecharsTemplate}}</p>
+    <p><span style="font-weight: bold;">truncatechars</span>Template after: {{truncatecharsTemplate | truncatechars:7}}</p>
+    
+    <p>truncatewords before: {{truncatecharsTemplate}}</p>
+    <p><span style="font-weight: bold;">truncatewords</span>Template after: {{truncatecharsTemplate | truncatewords:2}}</p>
+
+    <p>striptagsTemplate before: {{striptagsTemplate}}</p>
+    <p><span style="font-weight: bold;">striptagsTemplate</span>after: {{striptagsTemplate | striptags}}</p>
+
+    <!-- <p>pluralizeTemplate before: {{pluralizeTemplate}}</p> -->
+    <!-- <p><span style="font-weight: bold;">pluralize</span>Template after: {{pluralizeTemplate | pluralize}}</p> -->
+
+    <p>Hello </p>
+   
+
+</body>
+</html>
