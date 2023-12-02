@@ -5,12 +5,12 @@ import datetime
 
 
 def home(request):
-    data = {'name': 'Nirob',
-                   'age': 25,
-                   'addTemplate': 2000,
-                   'addSlashTemplate': "I'm Nirob",
-                   'capFirstTemplate': 'nirob',
-                   'centerTemplate': 'Nirob',
+    data = {       'name': 'Semon',
+                   
+                   'addTemplate': 1800,
+                   'addSlashTemplate': "It adds slash after a apostrophe - It's Semon",
+                   'capFirstTemplate': 'semon',
+                   'centerTemplate': 'Semon',
                    'cutTemplate': 'string with whitespaces',
                    'dateTemplate': datetime.datetime.now(),
                    'defaultTemplate': "",
@@ -28,25 +28,25 @@ def home(request):
                    'lastTemplate': ['a', 'b', 'c', 'd'],
                    'lengthTemplate': 'string',
                    'linenumbersTemplate': "First Line\nSecond Line\nThird Line",
-                   'lowerTemplate': 'Nirob BARMAN',
+                   'lowerTemplate': 'Semon Islam',
                    'make_listTemplate': 123,
-                   'make_listStringTemplate': 'Nirob BARMAN',
-                   'randomTemplate': 'Nirob BARMAN',
-                   #    'sliceTemplate': 'Nirob BARMAN',
+                   'make_listStringTemplate': 'Mohiminul Islam semon',
+                   'randomTemplate': 'this is random',
+                   
                    'sliceTemplate': ['a', 'b', 'c', 'd', 'e'],
-                   'slugifyTemplate': '    I am     Nirob BARMAN',
+                   'slugifyTemplate': '    I am     Semon ',
                    'timeTemplate': datetime.datetime.now(),
                    'timesinceTemplate': datetime.datetime.now() - datetime.timedelta(days=5),
-                   'titleTemplate': 'i am nirob barman',
-                   # 'unordered_listTemplate': ['a', 'b', 'c', 'd'],
+                   'titleTemplate': 'i am mohiminul Islam',
+              
                    'unordered_listTemplate': ['a', ['b', ['c', 'd']]],
-                   'upperTemplate': 'nirob barman',
-                   'wordcountTemplate': 'i am nirob barman',
-                   'truncatecharsTemplate': 'i am nirob barman',
-                   'truncatewordsTemplate': 'i am nirob barman',
-                   #    'truncatewords_htmlTemplate': 'i am nirob barman',
+                   'upperTemplate': 'semon ',
+                   'wordcountTemplate': 'i am semon , my name is semon',
+                   'truncatecharsTemplate': 'i am a graduate',
+                   'truncatewordsTemplate': 'i am a student of class 15',
+                  
                    'striptagsTemplate': '<b>I</b> <button>love</button> <span>dogs</span>',
-                #    'pluralizeTemplate': 1,
+               
                    }
 
     return render(request, 'index.html', data)
