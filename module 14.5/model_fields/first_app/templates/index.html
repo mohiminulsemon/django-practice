@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model form</title>
+</head>
+
+<body>
+    <h1 class="text-center">django model form</h1>
+
+    <ul>
+        {% for item in Data %}
+        <li>
+            Auto Field: {{ item.auto_field }}<br>
+            Big Integer Field: {{ item.big_integer_field }}<br>
+            Binary Field: {{ item.binary_field }}<br>
+            Boolean Field: {{ item.boolean_field }}<br>
+            Char Field: {{ item.char_field }}<br>
+            Date Field: {{ item.date_field }}<br>
+            Date Time Field: {{ item.date_time_field }}<br>
+            Decimal Field: {{ item.decimal_field }}<br>
+            Duration Field: {{ item.duration_field }}<br>
+            Email Field: {{ item.email_field }}<br>
+            Float Field: {{ item.float_field }}<br>
+            Generic IP Address Field: {{ item.generic_ip_address_field }}<br>
+            Integer Field: {{ item.integer_field }}<br>
+            JSON Field: {{ item.json_field }}<br>
+            Positive Big Integer Field: {{ item.positive_big_integer_field }}<br>
+            Positive Integer Field: {{ item.positive_integer_field }}<br>
+            Positive Small Integer Field: {{ item.positive_small_integer_field }}<br>
+            Slug Field: {{ item.slug_field }}<br>
+            Small Integer Field: {{ item.small_integer_field }}<br>
+            Text Field: {{ item.text_field }}<br>
+            Time Field: {{ item.time_field }}<br>
+            URL Field: {{ item.url_field }}<br>
+            UUID Field: {{ item.uuid_field }}<br><br>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>
