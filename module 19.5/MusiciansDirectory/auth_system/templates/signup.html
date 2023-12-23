@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}pass change{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block content %}
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h2 class="mb-4">{{title}}</h2>
+            <h2 class="mb-4">Sign Up</h2>
 
             {% if messages %}
                 {% for message in messages %}
@@ -19,14 +19,6 @@
             <form method="post">
                 {% csrf_token %}
 
-                {% if form.non_field_errors %}
-                {% for er in form.non_field_errors %}
-                    <div class="alert alert-danger" role="alert">
-                        {{er}}
-                    </div>
-                {% endfor %}
-                {% endif %}
-
                 <!-- {{form|crispy}} -->
 
                 {% for fm in form %}
@@ -38,7 +30,7 @@
 
                 {% endfor %}
                 <br>
-                <button type="submit" class="btn btn-primary mt-2">Change Password</button>
+                <button type="submit" class="btn btn-primary mt-2">Sign Up</button>
             </form>
         </div>
     </div>
