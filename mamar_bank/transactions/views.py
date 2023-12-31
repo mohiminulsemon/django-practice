@@ -2,19 +2,36 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils import timezone
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
-from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID
+from transactions.constants import DEPOSIT, WITHDRAWAL,LOAN, LOAN_PAID, TRANSFERD, RECEIVED
 from datetime import datetime
 from django.db.models import Sum
 from transactions.forms import (
     DepositForm,
     WithdrawForm,
     LoanRequestForm,
+    TransferMoneyForm
 )
 from transactions.models import Transaction
+from accounts.models import UserBankAccount
+from .models import BankSettings
+
+
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+def send_transaction_mail(user, amount, subject, template, current_balance):
+    message = render_to_string(template, {
+        'user': user,
+        'amount': amount,
+        'current_balance': current_balance,
+    })
+    send_email = EmailMultiAlternatives(subject, '', to=[user.user.email])
+    send_email.attach_alternative(message, 'text/html')
+    send_email.send()
 
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transactions/transaction_form.html'
@@ -77,6 +94,16 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+
+        bankrupt = BankSettings.objects.filter(is_bankrupt=True).first()
+
+        if bankrupt and bankrupt.is_bankrupt:
+            print("Bank is bankrupt")
+            messages.error(
+                self.request,
+                'Withdrawal is not allowed. The bank is bankrupt.'
+            )
+            return redirect(reverse_lazy('withdraw_money'))
 
         self.request.user.account.balance -= form.cleaned_data.get('amount')
         # balance = 300
@@ -181,3 +208,102 @@ class LoanListView(LoginRequiredMixin,ListView):
         queryset = Transaction.objects.filter(account=user_account,transaction_type=3)
         print(queryset)
         return queryset
+    
+
+class TransferMoneyView(View):
+    template_name = 'transactions/transfer_money.html'
+
+    def get(self, request):
+        form = TransferMoneyForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = TransferMoneyForm(request.POST)
+
+        if form.is_valid():
+            amount = form.cleaned_data['amount']
+            to_user_id = form.cleaned_data['to_user_id']
+
+            current_user = request.user.account
+
+            try:
+                to_user = UserBankAccount.objects.get(
+                    account_no=to_user_id)
+                print(to_user)
+                min_balance = 100
+                max_balance = 20000
+
+                if current_user.balance <= 0:
+                    messages.error(
+                        request,
+                        'you have not enough balance to transfer'
+                    )
+                    return render(request, self.template_name, {'form': form, 'title': 'Transfer Money'})
+
+                if amount < min_balance:
+                    messages.error(
+                        request,
+                        f'You need to transfer at least {min_balance} $'
+                    )
+                    return render(request, self.template_name, {'form': form, 'title': 'Transfer Money'})
+
+                if amount > max_balance and amount <= current_user.balance:
+                    messages.error(
+                        request,
+                        f'You can transfer at most {max_balance} $'
+                    )
+                    return render(request, self.template_name, {'form': form, 'title': 'Transfer Money'})
+
+                if amount > current_user.balance:
+                    messages.error(
+                        request,
+                        f'You have {current_user.balance} $ in your account. '
+                        'You can not transfer more than your account balance'
+                    )
+                    return render(request, self.template_name, {'form': form, 'title': 'Transfer Money'})
+
+                current_user.balance -= amount
+                current_user.save()
+
+                Transaction.objects.create(
+                    account=current_user,
+                    amount=amount,
+                    balance_after_transaction=current_user.balance,
+                    transaction_type=TRANSFERD,  
+                )
+                Transaction.objects.create(
+                    account=to_user,
+                    amount=amount,
+                    balance_after_transaction=to_user.balance,
+                    transaction_type=RECEIVED, 
+                )
+
+                to_user.balance += amount
+                to_user.save()
+
+                messages.success(
+                    request,
+                    f'Transfer of {"{:,.2f}".format(float(amount))}$ successful'
+                )
+
+                send_transaction_mail(
+                    current_user,
+                    amount,
+                    'Transfer Message',
+                    'transactions/transfered_email.html',
+                    current_user.balance,
+                )
+                send_transaction_mail(
+                    to_user,
+                    amount,
+                    'Received Message',
+                    'transactions/received_email.html',
+                    to_user.balance,
+                )
+
+            except UserBankAccount.DoesNotExist:
+                messages.error(
+                    request, 'User account not found. Please check the account number.')
+
+            return render(request, 'transactions/transfer_money.html', {'form': form, 'title': 'Transfer Money'})
+        return render(request, self.template_name, {'form': form, 'title': 'Transfer Money'})

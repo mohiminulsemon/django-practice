@@ -6,6 +6,21 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.views import View
 from django.shortcuts import redirect
+from django.contrib import messages
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+def send_password_change_mail(user, subject, template):
+    message = render_to_string(template, {
+        'user': user,
+    })
+    send_email = EmailMultiAlternatives(subject, '', to=[user.email])
+    send_email.attach_alternative(message, 'text/html')
+    send_email.send()
 
 class UserRegistrationView(FormView):
     template_name = 'accounts/user_registration.html'
@@ -48,3 +63,25 @@ class UserBankAccountUpdateView(View):
     
     
     
+def change_pass(request):
+    if request.user.is_authenticated:
+        form = PasswordChangeForm(request.user)
+        if request.method == 'POST':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)
+                messages.success(
+                    request, 'Your password was successfully updated!')
+                
+                send_password_change_mail(
+                    request.user, 
+                    'your account Password Changed'
+                    )
+
+                return redirect('profile')
+            else:
+                messages.error(request, 'Please correct the error below.')
+        return render(request, 'accounts/form.html', {'form': form, 'title': 'Change Your Password', 'button_text': 'Change Password', 'button_class': 'btn-warning'})
+    else:
+        return redirect('home')
