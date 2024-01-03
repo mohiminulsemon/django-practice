@@ -56,7 +56,7 @@ const loadAllProducts = () => {
                                 <p class="card-text my-0"> <span class="fw-bold">Price:</span> $${product.price}</p>
                                 <p class="card-text my-0"> <span class="fw-bold">Category:</span> ${product.category}</p>
                                 <p class="card-text my-0"> <span class="fw-bold">Rating:</span> ${product.rating.rate} (${product.rating.count} reviews)</p>
-                                <a href="#" class="btn btn-primary">Vies Details</a>
+                                <a target="_blank" href="productDetails.html?productId=${product.id}" class="btn btn-primary">Vies Details</a>
                             </div>
                         </div>
                     </div>`
