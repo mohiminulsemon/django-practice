@@ -37,4 +37,32 @@ const loadProducts = (category) => {
     // Add code to load products based on the selected category
 };
 
+
+
+const loadAllProducts = () => {
+    fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(json=>{
+                // console.log(json)
+                const productsContainer = document.getElementById('products-container')
+                json.forEach(product => {
+                    productsContainer.innerHTML += `
+                    <div class="col my-2">
+                        <div class="card" style="width: 20rem; height: 600px;">
+                            <img src="${product.image}" class="card-img-top w-100 h-50 mx-auto" alt="${product.title}" style="object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.title}</h5>
+                                <p class="card-text">${product.description.slice(0, 70)}...</p>
+                                <p class="card-text my-0"> <span class="fw-bold">Price:</span> $${product.price}</p>
+                                <p class="card-text my-0"> <span class="fw-bold">Category:</span> ${product.category}</p>
+                                <p class="card-text my-0"> <span class="fw-bold">Rating:</span> ${product.rating.rate} (${product.rating.count} reviews)</p>
+                                <a href="#" class="btn btn-primary">Vies Details</a>
+                            </div>
+                        </div>
+                    </div>`
+                })
+            })
+}
+
+loadAllProducts();
 loadCategories();
